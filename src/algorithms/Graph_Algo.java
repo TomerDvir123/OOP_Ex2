@@ -1,7 +1,19 @@
 package algorithms;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
+import dataStructure.DGraph;
+import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
 /**
@@ -10,24 +22,54 @@ import dataStructure.node_data;
  * @author 
  *
  */
-public class Graph_Algo implements graph_algorithms{
+public class Graph_Algo implements graph_algorithms,Serializable {
+
+	graph grap;
 
 	@Override
 	public void init(graph g) {
 		// TODO Auto-generated method stub
+		//add g.copy
+		this.grap = g;
 		
 	}
 
 	@Override
 	public void init(String file_name) {
 		// TODO Auto-generated method stub
-		
+		try {
+			
+			FileInputStream fi = new FileInputStream(new File(file_name));
+			ObjectInputStream oi = new ObjectInputStream(fi);
+			Graph_Algo t =  (Graph_Algo) oi.readObject();
+			this.grap =t.grap;
+			
+		} catch (RuntimeException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void save(String file_name) {
 		// TODO Auto-generated method stub
-		
+		try {
+			FileOutputStream f = new FileOutputStream(new File(file_name));
+			ObjectOutputStream o = new ObjectOutputStream(f);
+
+			// Write objects to file
+			o.writeObject(this);
+
+			o.close();
+			f.close();
+		} catch (RuntimeException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override
@@ -56,6 +98,28 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public graph copy() {
+		
+		
+		
+		graph other = new DGraph();
+		Collection<node_data> nod = this.grap.getV();
+		
+		Iterator<node_data> it = nod.iterator();
+		
+		while(it.hasNext()) {
+			
+			node_data temp_node = it.next();
+			
+			Collection<edge_data> edg = this.grap.getE(temp_node.getKey());
+			Iterator<edge_data> it2 = edg.iterator();
+			
+						
+		}
+		
+		
+		
+		
+		
 		// TODO Auto-generated method stub
 		return null;
 	}

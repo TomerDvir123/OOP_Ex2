@@ -1,5 +1,7 @@
 package dataStructure;
 
+import java.io.Serializable;
+
 import utils.Point3D;
 /**
  * This interface represents the set of operations applicable on a 

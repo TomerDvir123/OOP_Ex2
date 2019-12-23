@@ -1,8 +1,9 @@
 package dataStructure;
 
 import java.awt.Color;
+import java.io.Serializable;
 
-public class Edge implements edge_data {
+public class Edge implements edge_data,Serializable {
 
 	int src;
 	int dest;
@@ -10,12 +11,12 @@ public class Edge implements edge_data {
 	String info;
 	Color tag;
 	
-	public Edge (int src, int dest,Double weight) {
+	public Edge ( int src, int dest , Double weight ) {
 		this.weight=weight;
 		this.src=src;
 		this.dest=dest;
 	}
-	
+
 	@Override
 	public int getSrc() {
 		// TODO Auto-generated method stub

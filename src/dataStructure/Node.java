@@ -1,19 +1,20 @@
 package dataStructure;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import javax.tools.DocumentationTool.Location;
 
 import utils.Point3D;
 
-public class  Node implements node_data {
+public class  Node implements node_data,Serializable {
 
 	int key;
 	Point3D Location;
 	double weight;
 	String info ;
 	Color tag;
-	
+
 	public Node (int key,Point3D Location) {
 		this.key = key;
 		this.setLocation(Location);		
@@ -21,7 +22,7 @@ public class  Node implements node_data {
 
 	@Override
 	public int getKey() {
-		
+
 		return this.key;
 	}
 
@@ -71,6 +72,6 @@ public class  Node implements node_data {
 	public void setTag(int t) {
 		this.tag = new Color(t);		
 	}
-	
+
 
 }

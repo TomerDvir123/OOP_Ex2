@@ -12,6 +12,7 @@ package algorithms;
  *
  */
 
+import java.io.Serializable;
 import java.util.List;
 
 import dataStructure.graph;
