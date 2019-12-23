@@ -108,7 +108,7 @@ public class DGraph implements graph{
 	@Override
 	public int getMC() {
 		// TODO Auto-generated method stub
-		return 0;
+		return count_mc;
 	}
 
 }

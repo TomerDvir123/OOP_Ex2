@@ -56,7 +56,8 @@ public interface graph_algorithms {
 	 * src--> n1-->n2-->...dest
 	 * see: https://en.wikipedia.org/wiki/Shortest_path_problem
 	 * @param src - start node
-	 * @param dest - end (target) node
+	 * @param dest - 
+	 * end (target) node
 	 * @return
 	 */
 	public List<node_data> shortestPath(int src, int dest);
