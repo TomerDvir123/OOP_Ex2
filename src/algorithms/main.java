@@ -30,6 +30,7 @@ public class main {
 		
 		test.save("avi_graph");
 		test.init("avi_graph");
+		test.copy();
 		
 //		v1.c
 //		System.out.println();

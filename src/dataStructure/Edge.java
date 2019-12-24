@@ -15,6 +15,15 @@ public class Edge implements edge_data,Serializable {
 		this.weight=weight;
 		this.src=src;
 		this.dest=dest;
+		this.info = "to be implented";
+	}
+	
+	public Edge ( int src, int dest , Double weight , String info , int tag ) {
+		this.weight=weight;
+		this.src=src;
+		this.dest=dest;
+		this.info = info;
+		this.setTag(tag);
 	}
 
 	@Override

@@ -18,6 +18,15 @@ public class  Node implements node_data,Serializable {
 	public Node (int key,Point3D Location) {
 		this.key = key;
 		this.setLocation(Location);		
+		this.info="to be implented";
+	}
+	
+	public Node (int key , Point3D Location , double weight , String info , int tag ) {
+		this.key = key;
+		this.setLocation(Location);		
+		this.weight = weight;
+		this.info = info;
+		this.setTag(tag);
 	}
 
 	@Override

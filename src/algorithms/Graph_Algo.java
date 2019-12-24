@@ -13,9 +13,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import dataStructure.DGraph;
+import dataStructure.Node;
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
+import utils.Point3D;
 /**
  * This empty class represents the set of graph-theory algorithms
  * which should be implemented as part of Ex2 - Do edit this class.
@@ -31,19 +33,19 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 		// TODO Auto-generated method stub
 		//add g.copy
 		this.grap = g;
-		
+
 	}
 
 	@Override
 	public void init(String file_name) {
 		// TODO Auto-generated method stub
 		try {
-			
+
 			FileInputStream fi = new FileInputStream(new File(file_name));
 			ObjectInputStream oi = new ObjectInputStream(fi);
 			Graph_Algo t =  (Graph_Algo) oi.readObject();
 			this.grap =t.grap;
-			
+
 		} catch (RuntimeException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -99,29 +101,13 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 	@Override
 	public graph copy() {
 		
+		DGraph other = new DGraph();
+		
+		other.copyGraph(this.grap);
 		
 		
-		graph other = new DGraph();
-		Collection<node_data> nod = this.grap.getV();
-		
-		Iterator<node_data> it = nod.iterator();
-		
-		while(it.hasNext()) {
-			
-			node_data temp_node = it.next();
-			
-			Collection<edge_data> edg = this.grap.getE(temp_node.getKey());
-			Iterator<edge_data> it2 = edg.iterator();
-			
-						
-		}
-		
-		
-		
-		
-		
-		// TODO Auto-generated method stub
 		return null;
+		
 	}
 
 }
