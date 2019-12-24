@@ -29,7 +29,7 @@ public interface graph_algorithms {
 	 * @return
 	 */
 	public graph copy();
-	/**
+	/**x
 	 * Init a graph from file
 	 * @param file_name
 	 */

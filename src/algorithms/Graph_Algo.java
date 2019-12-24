@@ -64,22 +64,64 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 
 			// Write objects to file
 			o.writeObject(this);
-
 			o.close();
 			f.close();
 		} catch (RuntimeException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-
 	@Override
 	public boolean isConnected() {
 		// TODO Auto-generated method stub
-		return false;
+		Collection<node_data> colnod = this.grap.getV();
+		Iterator<node_data> connect = colnod.iterator();
+		Collection<edge_data> coledg = this.grap.getE(connect.next().getKey());
+		if (colnod.size()==1) {
+			return true;
+		}
+		else
+		{
+			boolean ans =checkcon(connect.next(), coledg);
+			while (ans!=false&&connect.hasNext())
+			{
+				if(connect.next().getTag()!=5)
+				{
+					ans=false;
+				}
+			}
+			return ans;
+		}
 	}
 
+	private boolean checkcon(node_data start,Collection<edge_data> coledg ) 
+	{
+		start.setTag(5);
+		if(coledg.size()==0) 
+		{
+			return false;
+		}
+		else 
+		{
+			boolean ans =true;
+			for (edge_data ed : coledg)
+			{
+				if (ed.getTag()!=5)
+				{
+					ed.setTag(5);
+					node_data dest = this.grap.getNode(ed.getDest());
+					Collection<edge_data> destedg = this.grap.getE(ed.getDest());
+					ans = checkcon(dest, destedg);
+				}
+			}
+			if (ans==true) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
 	@Override
 	public double shortestPathDist(int src, int dest) {
 		// TODO Auto-generated method stub
@@ -100,14 +142,14 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 
 	@Override
 	public graph copy() {
-		
+
 		DGraph other = new DGraph();
-		
+
 		other.copyGraph(this.grap);
-		
-		
+
+
 		return null;
-		
+
 	}
 
 }
