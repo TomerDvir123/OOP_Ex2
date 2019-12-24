@@ -33,7 +33,7 @@ public class DGraph implements graph,Serializable {
 		// TODO Auto-generated method stub
 		count_mc++;
 		nodes.put(n.getKey(), n);
-		edges.put(n,new Hashtable<Integer, edge_data>());
+		edges.put(n , new Hashtable<Integer, edge_data>());
 	}
 
 	@Override
@@ -66,8 +66,10 @@ public class DGraph implements graph,Serializable {
 	public node_data removeNode(int key) {
 		// TODO Auto-generated method stub
 		count_mc++;
+		
 		Collection<node_data> col = getV();
 		Iterator<node_data> itr = col.iterator();
+		
 		while (itr.hasNext()) 
 		{
 			node_data temp = itr.next();
@@ -79,7 +81,8 @@ public class DGraph implements graph,Serializable {
 		}
 		node_data k = nodes.get(key);
 		count_ed = count_ed - edges.get(k).size();
-		edges.get(k).remove(key);		
+		edges.remove(k);
+
 		return nodes.remove(key);
 	}
 

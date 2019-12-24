@@ -83,6 +83,7 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 		else
 		{
 			boolean ans =checkcon(connect.next(), coledg);
+
 			while (ans!=false&&connect.hasNext())
 			{
 				if(connect.next().getTag()!=5)
@@ -126,10 +127,6 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 	public double shortestPathDist(int src, int dest) {
 		// TODO Auto-generated method stub
 
-		Dijkstra(src);
-		return 0;
-	}
-	public void Dijkstra (int src) {
 		Collection<node_data> colnod = this.grap.getV();
 		Iterator<node_data> itrnod = colnod.iterator();		
 		while (itrnod.hasNext()) 
@@ -142,26 +139,34 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 				itrnod.next().setWeight(0);
 		}
 		Collection<edge_data> coledg = this.grap.getE(src);	
-		Iterator<edge_data> itrnod2 = coledg.iterator();
 		
-		while (itrnod2.hasNext()) {
-			double sum = ( itrnod.next().getWeight()+itrnod2.next().getWeight());
-			double max = this.grap.getNode(itrnod2.next().getDest()).getWeight();
+		Dijkstra(src , coledg);
+		return 0;
+	}
+	public void Dijkstra (int src , Collection<edge_data> coledg) {
+
+		node_data source = this.grap.getNode(src);
+		Iterator<edge_data> itrnod2 = coledg.iterator();
+
+		for (edge_data ed : coledg) {
+			
+			double sum = ( source.getWeight() + ed.getWeight() );
+			int dest = ed.getDest();
+			double max = this.grap.getNode(dest).getWeight();
 			if( sum <= max)
 			{
-				this.grap.getNode(itrnod2.next().getDest()).setWeight(sum);
+				this.grap.getNode(dest).setWeight(sum);
 			}
-	
-			
 		}
-
-
-
-
-
-
-
-
+		source.setTag(99);
+//		while (itrnod2.hasNext()) {
+//			double sum = ( source.getWeight()+itrnod2.next().getWeight() );
+//			double max = this.grap.getNode(itrnod2.next().getDest()).getWeight();
+//			if( sum <= max)
+//			{
+//				this.grap.getNode(itrnod2.next().getDest()).setWeight(sum);
+//			}
+//		}
 
 	}
 

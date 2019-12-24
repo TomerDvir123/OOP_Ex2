@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import utils.Point3D;
 
-public class  Node implements node_data,Serializable {
+public class Node implements node_data , Serializable {
 
 	int key;
 	Point3D Location;
