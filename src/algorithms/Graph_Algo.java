@@ -125,7 +125,44 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 	@Override
 	public double shortestPathDist(int src, int dest) {
 		// TODO Auto-generated method stub
+
+		Dijkstra(src);
 		return 0;
+	}
+	public void Dijkstra (int src) {
+		Collection<node_data> colnod = this.grap.getV();
+		Iterator<node_data> itrnod = colnod.iterator();		
+		while (itrnod.hasNext()) 
+		{
+			if(itrnod.next().getKey()!=src)
+			{
+				itrnod.next().setWeight(Integer.MAX_VALUE);
+			}
+			else
+				itrnod.next().setWeight(0);
+		}
+		Collection<edge_data> coledg = this.grap.getE(src);	
+		Iterator<edge_data> itrnod2 = coledg.iterator();
+		
+		while (itrnod2.hasNext()) {
+			double sum = ( itrnod.next().getWeight()+itrnod2.next().getWeight());
+			double max = this.grap.getNode(itrnod2.next().getDest()).getWeight();
+			if( sum <= max)
+			{
+				this.grap.getNode(itrnod2.next().getDest()).setWeight(sum);
+			}
+	
+			
+		}
+
+
+
+
+
+
+
+
+
 	}
 
 	@Override
