@@ -158,13 +158,13 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 			Dijkstra(start , coledg);
 			for (edge_data ed : coledg) {
 				int destn = ed.getDest();
-
+				
 				pQueue.add(this.grap.getNode(destn).getWeight());//2
 				AR.add(this.grap.getNode(ed.getDest()));
 			}
 		}
 		System.out.println(this.grap.getNode(dest).getInfo());
-		return 0;
+		return this.grap.getNode(dest).getWeight();
 	}
 	public void Dijkstra (int src , Collection<edge_data> coledg) {
 
