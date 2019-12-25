@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -130,7 +131,7 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 
 		Collection<node_data> colnod = this.grap.getV();
 
-		for (node_data nd : colnod) 
+		for (node_data nd : colnod)
 		{
 			if(nd.getKey()!=src)
 			{
@@ -138,16 +139,29 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 			}
 			else
 				nd.setWeight(0);
+				nd.setInfo(nd.getKey()+",");
 		}
 		PriorityQueue<Double> pQueue = new PriorityQueue<Double>();
+		ArrayList<node_data> AR = new ArrayList<node_data>();
 		pQueue.add(this.grap.getNode(src).getWeight());
+		int start  = src;
 		while(pQueue.size()!=0)
 		{
-			pQueue.poll();
-			Collection<edge_data> coledg = this.grap.getE(src);
-			Dijkstra(src , coledg);
-			
-			
+			for (int i = 0; i < AR.size(); i++) {
+				if(AR.get(i).getWeight() == pQueue.peek()) {
+					start=AR.get(i).getKey();
+					AR.remove(i);
+				}
+			}
+			pQueue.poll();//0
+			Collection<edge_data> coledg = this.grap.getE(start);
+			Dijkstra(start , coledg);
+			for (edge_data ed : coledg) {
+				int destn = ed.getDest();
+
+				pQueue.add(this.grap.getNode(destn).getWeight());//2
+				AR.add(this.grap.getNode(ed.getDest()));
+			}
 		}
 		System.out.println(this.grap.getNode(dest).getInfo());
 		return 0;
@@ -164,10 +178,14 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 				double max = this.grap.getNode(dest).getWeight();
 				if( sum <= max)
 				{
+					String path = this.grap.getNode(src).getInfo();
+					String dest2 = this.grap.getNode(dest).getKey()+"";
+					this.grap.getNode(dest).setInfo(path+dest2+",");
 					this.grap.getNode(dest).setWeight(sum);
-					int ke = source.getKey();
-					String des = this.grap.getNode(dest).getInfo()+ ke + ",";
-					this.grap.getNode(dest).setInfo(des);
+//					this.grap.getNode(dest).setWeight(sum);
+//					int ke = source.getKey();
+//					String des = this.grap.getNode(dest).getInfo()+ ke + ",";
+//					this.grap.getNode(dest).setInfo(des);
 				}			
 			}
 		}

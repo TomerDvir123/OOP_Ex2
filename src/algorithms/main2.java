@@ -49,7 +49,7 @@ public class main2 {
 		
 		graph_algorithms test = new Graph_Algo();
 		test.init(g);
-		test.shortestPathDist(1, 7);
+		test.shortestPathDist(1,7);
 	}
 
 }
