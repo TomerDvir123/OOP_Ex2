@@ -128,7 +128,7 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 		// TODO Auto-generated method stub
 
 		Collection<node_data> colnod = this.grap.getV();
-				
+
 		for (node_data nd : colnod) {
 
 			if(nd.getKey()!=src)
@@ -139,7 +139,7 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 				nd.setWeight(0);
 		}
 		Collection<edge_data> coledg = this.grap.getE(src);	
-		
+
 		Dijkstra(src , coledg);
 		return 0;
 	}
@@ -147,17 +147,20 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 
 		node_data source = this.grap.getNode(src);
 		for (edge_data ed : coledg)
-		{			
-			double sum = ( source.getWeight() + ed.getWeight() );
-			int dest = ed.getDest();
-			double max = this.grap.getNode(dest).getWeight();
-			if( sum <= max)
+		{		
+			if (this.grap.getNode(ed.getDest()).getWeight()==99) 
 			{
-				this.grap.getNode(dest).setWeight(sum);
-				int ke = source.getKey();
-				String des = ke + ",";
-				this.grap.getNode(dest).setInfo(des);
-			}			
+			double sum = ( source.getWeight() + ed.getWeight() );
+				int dest = ed.getDest();
+				double max = this.grap.getNode(dest).getWeight();
+				if( sum <= max)
+				{
+					this.grap.getNode(dest).setWeight(sum);
+					int ke = source.getKey();
+					String des = ke + ",";
+					this.grap.getNode(dest).setInfo(des);
+				}			
+			}
 		}
 		source.setTag(99);
 	}
