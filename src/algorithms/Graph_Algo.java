@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -139,7 +140,7 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 			}
 			else
 				nd.setWeight(0);
-				nd.setInfo(nd.getKey()+",");
+			nd.setInfo(nd.getKey()+",");
 		}
 		PriorityQueue<Double> pQueue = new PriorityQueue<Double>();
 		ArrayList<node_data> AR = new ArrayList<node_data>();
@@ -155,17 +156,44 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 			}
 			pQueue.poll();//0
 			Collection<edge_data> coledg = this.grap.getE(start);
-			Dijkstra(start , coledg);
+			// Dijkstra(start , coledg);
+
+
+			node_data source = this.grap.getNode(src);
+			for (edge_data ed : coledg)
+			{
+				if (this.grap.getNode(ed.getDest()).getTag()!=99)
+				{
+					double sum = ( source.getWeight() + ed.getWeight() );
+					int dest3 = ed.getDest();
+					double max = this.grap.getNode(dest3).getWeight();
+					if( sum <= max)
+					{
+						String path = this.grap.getNode(src).getInfo();
+						String dest2 = this.grap.getNode(dest3).getKey()+"";
+						this.grap.getNode(dest3).setInfo(path+dest2+",");
+						this.grap.getNode(dest3).setWeight(sum);
+						// this.grap.getNode(dest).setWeight(sum);
+						// int ke = source.getKey();
+						// String des = this.grap.getNode(dest).getInfo()+ ke + ",";
+						// this.grap.getNode(dest).setInfo(des);
+					}
+				}
+			}
+			source.setTag(99);
+
 			for (edge_data ed : coledg) {
 				int destn = ed.getDest();
-				
+
 				pQueue.add(this.grap.getNode(destn).getWeight());//2
 				AR.add(this.grap.getNode(ed.getDest()));
 			}
 		}
 		System.out.println(this.grap.getNode(dest).getInfo());
 		return this.grap.getNode(dest).getWeight();
+
 	}
+	/*
 	public void Dijkstra (int src , Collection<edge_data> coledg) {
 
 		node_data source = this.grap.getNode(src);
@@ -182,20 +210,44 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 					String dest2 = this.grap.getNode(dest).getKey()+"";
 					this.grap.getNode(dest).setInfo(path+dest2+",");
 					this.grap.getNode(dest).setWeight(sum);
-//					this.grap.getNode(dest).setWeight(sum);
-//					int ke = source.getKey();
-//					String des = this.grap.getNode(dest).getInfo()+ ke + ",";
-//					this.grap.getNode(dest).setInfo(des);
+					//					this.grap.getNode(dest).setWeight(sum);
+					//					int ke = source.getKey();
+					//					String des = this.grap.getNode(dest).getInfo()+ ke + ",";
+					//					this.grap.getNode(dest).setInfo(des);
 				}			
 			}
 		}
 		source.setTag(99);
 	}
-
+*/
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		// TODO Auto-generated method stub
-		return null;
+		int index;
+		List<node_data> nodes = new ArrayList<node_data>();
+		String temp = this.grap.getNode(dest).getInfo();
+
+		shortestPathDist(src , dest);
+		temp = this.grap.getNode(dest).getInfo();
+		//int len2 = temp.length();
+		String num = "";
+		int i = 0;
+		int t = temp.indexOf(',');
+		while(temp.length()>0 && t!=0  && t!=-1)
+		{
+			num = temp.substring(i, t);
+			index = Integer.parseInt(num);
+			nodes.add(grap.getNode(index));
+			temp = temp.substring(t+1, temp.length());   //-index
+			//i = t+1;
+			t = temp.indexOf(',');    //+2  //+1
+			//i = Integer.parseInt(temp.substring(0, t));
+		}
+		for (int j = 0; j < nodes.size(); j++) {
+			System.out.print(nodes.get(j).getKey()+" ");
+		}
+		return nodes;
+
 	}
 
 	@Override
@@ -214,6 +266,16 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 
 		return null;
 
+	}
+
+}
+class comp implements Comparator<node_data>
+{
+
+	@Override
+	public int compare(node_data o1, node_data o2) {
+		// TODO Auto-generated method stub
+		return (int) (o1.getWeight() - o2.getWeight());
 	}
 
 }
