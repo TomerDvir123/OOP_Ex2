@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import dataStructure.DGraph;
 import dataStructure.Node;
@@ -129,18 +130,26 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 
 		Collection<node_data> colnod = this.grap.getV();
 
-		for (node_data nd : colnod) {
-
+		for (node_data nd : colnod) 
+		{
 			if(nd.getKey()!=src)
 			{
-				nd.setWeight(Integer.MAX_VALUE);
+				nd.setWeight(Double.MAX_VALUE);
 			}
 			else
 				nd.setWeight(0);
 		}
-		Collection<edge_data> coledg = this.grap.getE(src);	
-
-		Dijkstra(src , coledg);
+		PriorityQueue<Double> pQueue = new PriorityQueue<Double>();
+		pQueue.add(this.grap.getNode(src).getWeight());
+		while(pQueue.size()!=0)
+		{
+			pQueue.poll();
+			Collection<edge_data> coledg = this.grap.getE(src);
+			Dijkstra(src , coledg);
+			
+			
+		}
+		System.out.println(this.grap.getNode(dest).getInfo());
 		return 0;
 	}
 	public void Dijkstra (int src , Collection<edge_data> coledg) {
@@ -148,16 +157,16 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 		node_data source = this.grap.getNode(src);
 		for (edge_data ed : coledg)
 		{		
-			if (this.grap.getNode(ed.getDest()).getWeight()==99) 
+			if (this.grap.getNode(ed.getDest()).getTag()!=99) 
 			{
-			double sum = ( source.getWeight() + ed.getWeight() );
+				double sum = ( source.getWeight() + ed.getWeight() );
 				int dest = ed.getDest();
 				double max = this.grap.getNode(dest).getWeight();
 				if( sum <= max)
 				{
 					this.grap.getNode(dest).setWeight(sum);
 					int ke = source.getKey();
-					String des = ke + ",";
+					String des = this.grap.getNode(dest).getInfo()+ ke + ",";
 					this.grap.getNode(dest).setInfo(des);
 				}			
 			}
