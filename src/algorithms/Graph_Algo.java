@@ -128,15 +128,15 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 		// TODO Auto-generated method stub
 
 		Collection<node_data> colnod = this.grap.getV();
-		Iterator<node_data> itrnod = colnod.iterator();		
-		while (itrnod.hasNext()) 
-		{
-			if(itrnod.next().getKey()!=src)
+				
+		for (node_data nd : colnod) {
+
+			if(nd.getKey()!=src)
 			{
-				itrnod.next().setWeight(Integer.MAX_VALUE);
+				nd.setWeight(Integer.MAX_VALUE);
 			}
 			else
-				itrnod.next().setWeight(0);
+				nd.setWeight(0);
 		}
 		Collection<edge_data> coledg = this.grap.getE(src);	
 		
@@ -146,28 +146,20 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 	public void Dijkstra (int src , Collection<edge_data> coledg) {
 
 		node_data source = this.grap.getNode(src);
-		Iterator<edge_data> itrnod2 = coledg.iterator();
-
-		for (edge_data ed : coledg) {
-			
+		for (edge_data ed : coledg)
+		{			
 			double sum = ( source.getWeight() + ed.getWeight() );
 			int dest = ed.getDest();
 			double max = this.grap.getNode(dest).getWeight();
 			if( sum <= max)
 			{
 				this.grap.getNode(dest).setWeight(sum);
-			}
+				int ke = source.getKey();
+				String des = ke + ",";
+				this.grap.getNode(dest).setInfo(des);
+			}			
 		}
 		source.setTag(99);
-//		while (itrnod2.hasNext()) {
-//			double sum = ( source.getWeight()+itrnod2.next().getWeight() );
-//			double max = this.grap.getNode(itrnod2.next().getDest()).getWeight();
-//			if( sum <= max)
-//			{
-//				this.grap.getNode(itrnod2.next().getDest()).setWeight(sum);
-//			}
-//		}
-
 	}
 
 	@Override
