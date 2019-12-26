@@ -15,7 +15,7 @@ public class Node implements node_data , Serializable {
 	public Node (int key,Point3D Location) {
 		this.key = key;
 		this.setLocation(Location);		
-		this.info="to be implented";
+//		this.info="to be implented";
 		this.setTag(0);
 	}
 	

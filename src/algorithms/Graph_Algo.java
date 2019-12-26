@@ -38,7 +38,16 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 		this.grap = g;
 
 	}
+	public void cleanGraf () {
+		Collection<node_data> colnod = this.grap.getV();
 
+		for (node_data nd : colnod)
+		{
+			nd.setWeight(Double.MAX_VALUE);
+			nd.setInfo("");
+			nd.setTag(0);
+		}
+	}
 	@Override
 	public void init(String file_name) {
 		// TODO Auto-generated method stub
@@ -130,141 +139,155 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 	public double shortestPathDist(int src, int dest) {
 		// TODO Auto-generated method stub
 
-		Collection<node_data> colnod = this.grap.getV();
-
-		for (node_data nd : colnod)
-		{
-			if(nd.getKey()!=src)
-			{
-				nd.setWeight(Double.MAX_VALUE);
-			}
-			else
-				nd.setWeight(0);
-			nd.setInfo(nd.getKey()+",");
-		}
+		cleanGraf();
+		this.grap.getNode(src).setWeight(0);
+		this.grap.getNode(src).setInfo(src+"");
 		PriorityQueue<Double> pQueue = new PriorityQueue<Double>();
 		ArrayList<node_data> AR = new ArrayList<node_data>();
 		pQueue.add(this.grap.getNode(src).getWeight());
 		int start  = src;
 		while(pQueue.size()!=0)
 		{
-			for (int i = 0; i < AR.size(); i++) {
+			boolean check = true;
+			for (int i = 0; i < AR.size() && check; i++) {
+
 				if(AR.get(i).getWeight() == pQueue.peek()) {
 					start=AR.get(i).getKey();
 					AR.remove(i);
+					check = false;
 				}
 			}
 			pQueue.poll();//0
 			Collection<edge_data> coledg = this.grap.getE(start);
-			// Dijkstra(start , coledg);
-
-
-			node_data source = this.grap.getNode(src);
+			node_data source = this.grap.getNode(start);
+			//	source.setInfo(s);
 			for (edge_data ed : coledg)
 			{
-				if (this.grap.getNode(ed.getDest()).getTag()!=99)
+				double sum = ( source.getWeight() + ed.getWeight() );
+				int dest3 = ed.getDest();
+				double max = this.grap.getNode(dest3).getWeight();
+				if( sum <= max)
 				{
-					double sum = ( source.getWeight() + ed.getWeight() );
-					int dest3 = ed.getDest();
-					double max = this.grap.getNode(dest3).getWeight();
-					if( sum <= max)
-					{
-						String path = this.grap.getNode(src).getInfo();
-						String dest2 = this.grap.getNode(dest3).getKey()+"";
-						this.grap.getNode(dest3).setInfo(path+dest2+",");
-						this.grap.getNode(dest3).setWeight(sum);
-						// this.grap.getNode(dest).setWeight(sum);
-						// int ke = source.getKey();
-						// String des = this.grap.getNode(dest).getInfo()+ ke + ",";
-						// this.grap.getNode(dest).setInfo(des);
-					}
+					//strings
+					//String before = source.getInfo();
+					//					String now = this.grap.getNode(dest3).getKey()+"";
+					this.grap.getNode(dest3).setInfo(ed.getSrc()+"");
+
+					//whights
+					AR.remove(this.grap.getNode(dest3));
+					pQueue.remove(this.grap.getNode(dest3).getWeight());
+					this.grap.getNode(dest3).setWeight(sum);
+				}
+				if (this.grap.getNode(ed.getDest()).getTag()!=99 && sum<max)
+				{
+					int destn = ed.getDest();
+					pQueue.add(this.grap.getNode(destn).getWeight());//2
+					AR.add(this.grap.getNode(ed.getDest()));
 				}
 			}
 			source.setTag(99);
-
-			for (edge_data ed : coledg) {
-				int destn = ed.getDest();
-
-				pQueue.add(this.grap.getNode(destn).getWeight());//2
-				AR.add(this.grap.getNode(ed.getDest()));
-			}
 		}
-		System.out.println(this.grap.getNode(dest).getInfo());
+		//		System.out.println(this.grap.getNode(dest).getInfo());
 		return this.grap.getNode(dest).getWeight();
-
 	}
-	/*
-	public void Dijkstra (int src , Collection<edge_data> coledg) {
 
-		node_data source = this.grap.getNode(src);
-		for (edge_data ed : coledg)
-		{		
-			if (this.grap.getNode(ed.getDest()).getTag()!=99) 
-			{
-				double sum = ( source.getWeight() + ed.getWeight() );
-				int dest = ed.getDest();
-				double max = this.grap.getNode(dest).getWeight();
-				if( sum <= max)
-				{
-					String path = this.grap.getNode(src).getInfo();
-					String dest2 = this.grap.getNode(dest).getKey()+"";
-					this.grap.getNode(dest).setInfo(path+dest2+",");
-					this.grap.getNode(dest).setWeight(sum);
-					//					this.grap.getNode(dest).setWeight(sum);
-					//					int ke = source.getKey();
-					//					String des = this.grap.getNode(dest).getInfo()+ ke + ",";
-					//					this.grap.getNode(dest).setInfo(des);
-				}			
-			}
-		}
-		source.setTag(99);
-	}
-*/
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		// TODO Auto-generated method stub
-		int index;
-		List<node_data> nodes = new ArrayList<node_data>();
-		String temp = this.grap.getNode(dest).getInfo();
+		List<node_data> rememberWay = new ArrayList<node_data>();
 
-		shortestPathDist(src , dest);
-		temp = this.grap.getNode(dest).getInfo();
-		//int len2 = temp.length();
-		String num = "";
-		int i = 0;
-		int t = temp.indexOf(',');
-		while(temp.length()>0 && t!=0  && t!=-1)
-		{
-			num = temp.substring(i, t);
-			index = Integer.parseInt(num);
-			nodes.add(grap.getNode(index));
-			temp = temp.substring(t+1, temp.length());   //-index
-			//i = t+1;
-			t = temp.indexOf(',');    //+2  //+1
-			//i = Integer.parseInt(temp.substring(0, t));
+		shortestPathDist(src, dest);
+		int now = dest;
+		while (now!=src) {
+			node_data temp = this.grap.getNode(now);
+			rememberWay.add(temp);
+			String t = temp.getInfo();
+			now = Integer.parseInt(t);			
 		}
-		for (int j = 0; j < nodes.size(); j++) {
-			System.out.print(nodes.get(j).getKey()+" ");
-		}
-		return nodes;
-
+		rememberWay.add(this.grap.getNode(src));
+		return rememberWay;
 	}
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
-		// TODO Auto-generated method stub
-		return null;
+		if((connection (this.grap))==false)
+		{
+			return null;
+		}
+		List<node_data> nodesTSP = new ArrayList<node_data>();
+		List<node_data> nodesTSP_temp = new ArrayList<node_data>();
+		int y = 0;
+		int i = 0;
+		while(i+1<targets.size())
+		{
+			nodesTSP_temp = shortestPath(targets.get(i), targets.get(i+1));
+			for (int k = 0; k < nodesTSP_temp.size(); k++)
+			{
+				nodesTSP.set(y, nodesTSP_temp.get(k));
+				y++;
+			}
+			i++;
+		}
+		return nodesTSP;
+	}
+
+
+	private boolean connection (graph x) {
+		Collection<node_data> temp = this.grap.getV();
+		int size = temp.size();
+		int sum_edges = 0;
+		for (node_data nd : temp) {
+			sum_edges = this.grap.getE(nd.getKey()).size();
+			if(sum_edges != size-1)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public graph copy() {
 
-		DGraph other = new DGraph();
+		graph a = new DGraph();
 
-		other.copyGraph(this.grap);
+		Collection<node_data> nod = this.grap.getV();
+		Iterator<node_data> it = nod.iterator();
+
+		while(it.hasNext()) {
+
+			node_data temp_node = it.next();
+			//deep copy of Node
+			int key = temp_node.getKey();
+			Point3D Location = new Point3D(temp_node.getLocation().x() , temp_node.getLocation().y() , temp_node.getLocation().z() );
+			double weight = temp_node.getWeight();
+			String info = new String(temp_node.getInfo());
+
+			int tag = temp_node.getTag();
 
 
-		return null;
+			a.addNode(new Node(key, Location, weight, info, tag));
+
+
+			Collection<edge_data> edg = this.grap.getE(temp_node.getKey());
+			Iterator<edge_data> it2 = edg.iterator();
+
+			while(it2.hasNext()) {
+				edge_data ed = it2.next();
+				//deep copy of Edge
+				int src = ed.getSrc();
+				int dest = ed.getDest();
+				double edge_weight = ed.getWeight();
+				String edge_info = new String(ed.getInfo());
+				int edge_tag = ed.getTag();
+				a.connect(src, dest, edge_weight);
+				a.getEdge(src, dest).setInfo(edge_info);
+				a.getEdge(src, dest).setTag(edge_tag);
+			}
+
+		}
+
+		return a;
 
 	}
 

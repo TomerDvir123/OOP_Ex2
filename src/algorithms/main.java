@@ -33,6 +33,7 @@ public class main {
 		g.addNode(v4);
 		g.addNode(v5);
 		//g.addNode(v6);
+		
 		g.connect(v1.getKey(), v2.getKey(), 5);
 		g.connect(v2.getKey(), v1.getKey(), 5);
 		g.connect(v3.getKey(), v2.getKey(), 5);
@@ -41,6 +42,7 @@ public class main {
 		g.connect(v4.getKey(), v1.getKey(), 5);
 		g.connect(v4.getKey(), v5.getKey(), 5);
 		g.connect(v5.getKey(), v4.getKey(), 5);
+		
 		graph_algorithms test = new Graph_Algo();
 		test.init(g);
 //		

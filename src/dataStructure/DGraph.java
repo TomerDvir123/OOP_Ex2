@@ -115,44 +115,4 @@ public class DGraph implements graph,Serializable {
 		return count_mc;
 	}
 	
-	public graph copyGraph(graph gr) {
-
-		
-		graph other = new DGraph();
-		
-		Collection<node_data> nod = gr.getV();
-		Iterator<node_data> it = nod.iterator();
-
-		while(it.hasNext()) {
-
-			node_data temp_node = it.next();
-			//deep copy of Node
-			int key = temp_node.getKey();
-			Point3D Location = new Point3D(temp_node.getLocation().x() , temp_node.getLocation().y() , temp_node.getLocation().z() );
-			double weight = temp_node.getWeight();
-			String info = new String(temp_node.getInfo());
-			int tag = temp_node.getTag();
-			
-			gr.addNode(new Node(key, Location, weight, info, tag));
-			
-			
-			Collection<edge_data> edg = gr.getE(temp_node.getKey());
-			Iterator<edge_data> it2 = edg.iterator();
-
-			while(it2.hasNext()) {
-				edge_data ed = it2.next();
-				//deep copy of Edge
-				int src = ed.getSrc();
-				int dest = ed.getDest();
-				double edge_weight = ed.getWeight();
-				String edge_info = new String(ed.getInfo());
-				int edge_tag = ed.getTag();
-				gr.connect(src, dest, edge_weight);
-				
-			}
-
-		}
-
-		return null;
-	}
 }
