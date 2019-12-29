@@ -86,20 +86,25 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 	@Override
 	public boolean isConnected() {
 		// TODO Auto-generated method stub
+		cleanGraf();
 		Collection<node_data> colnod = this.grap.getV();
 		Iterator<node_data> connect = colnod.iterator();
-		Collection<edge_data> coledg = this.grap.getE(connect.next().getKey());
+
+
 		if (colnod.size()==1) {
 			return true;
 		}
 		else
 		{
-			boolean ans =checkcon(connect.next(), coledg);
 
-			while (ans!=false&&connect.hasNext())
-			{
-				if(connect.next().getTag()!=5)
-				{
+			node_data d =connect.next();
+			d =connect.next();
+			Collection<edge_data> coledg = this.grap.getE(d.getKey());
+
+			boolean ans =checkcon(d, coledg);
+			colnod = this.grap.getV();
+			for (node_data ttt : colnod) {
+				if(ttt.getTag()!=5) {
 					ans=false;
 				}
 			}
@@ -107,16 +112,19 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 		}
 	}
 
-	private boolean checkcon(node_data start,Collection<edge_data> coledg ) 
+	private boolean checkcon(node_data start,Collection<edge_data> coledg )
 	{
-		start.setTag(5);
-		if(coledg.size()==0) 
+
+		if(coledg.size()!=0) {
+			start.setTag(5);
+		}
+		if(coledg.size()==0)
 		{
 			return false;
 		}
-		else 
+		else
 		{
-			boolean ans =true;
+			boolean ans = true;
 			for (edge_data ed : coledg)
 			{
 				if (ed.getTag()!=5)
@@ -135,6 +143,7 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 			}
 		}
 	}
+
 	@Override
 	public double shortestPathDist(int src, int dest) {
 		// TODO Auto-generated method stub
