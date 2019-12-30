@@ -2,6 +2,8 @@ package Tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import dataStructure.*;
 import algorithms.Graph_Algo;
@@ -12,7 +14,7 @@ class graph_algorithmsTest {
 
 	@Test
 	void testInitGraph() {
-		
+
 		Point3D p1 = new Point3D(0,0);
 		Point3D p2 = new Point3D(1,1);
 
@@ -27,7 +29,7 @@ class graph_algorithmsTest {
 		g.connect(v1.getKey(), v2.getKey(), 5);
 
 		graph_algorithms test = new Graph_Algo();
-	
+
 		try {
 			test.init(g);
 		} catch (Exception e) {
@@ -35,80 +37,80 @@ class graph_algorithmsTest {
 		}
 	}
 
-//	@Test
-//	void testCopy() {
-//		
-//		
-//		
-//		Person p1 = new Person("John", 30, "Male");
-////		Person p2 = new Person("Rachel", 25, "Female");
-//		
-//		try {
-//			FileOutputStream f = new FileOutputStream(new File("myObjects.txt"));
-//			ObjectOutputStream o = new ObjectOutputStream(f);
-//
-//			// Write objects to file
-//			o.writeObject(p1);
-//			o.writeObject(p2);
-//
-//			o.close();
-//			f.close();
-//
-//			FileInputStream fi = new FileInputStream(new File("myObjects.txt"));
-//			ObjectInputStream oi = new ObjectInputStream(fi);
-//
-//			// Read objects
-//			Person pr1 = (Person) oi.readObject();
-//			Person pr2 = (Person) oi.readObject();
-//
-//			System.out.println(pr1.toString());
-//			System.out.println(pr2.toString());
-//
-//			oi.close();
-//			fi.close();
-//
-//		} catch (FileNotFoundException e) {
-//			System.out.println("File not found");
-//		} catch (IOException e) {
-//			System.out.println("Error initializing stream");
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+	//	@Test
+	//	void testCopy() {
+	//		
+	//		
+	//		
+	//		Person p1 = new Person("John", 30, "Male");
+	////		Person p2 = new Person("Rachel", 25, "Female");
+	//		
+	//		try {
+	//			FileOutputStream f = new FileOutputStream(new File("myObjects.txt"));
+	//			ObjectOutputStream o = new ObjectOutputStream(f);
+	//
+	//			// Write objects to file
+	//			o.writeObject(p1);
+	//			o.writeObject(p2);
+	//
+	//			o.close();
+	//			f.close();
+	//
+	//			FileInputStream fi = new FileInputStream(new File("myObjects.txt"));
+	//			ObjectInputStream oi = new ObjectInputStream(fi);
+	//
+	//			// Read objects
+	//			Person pr1 = (Person) oi.readObject();
+	//			Person pr2 = (Person) oi.readObject();
+	//
+	//			System.out.println(pr1.toString());
+	//			System.out.println(pr2.toString());
+	//
+	//			oi.close();
+	//			fi.close();
+	//
+	//		} catch (FileNotFoundException e) {
+	//			System.out.println("File not found");
+	//		} catch (IOException e) {
+	//			System.out.println("Error initializing stream");
+	//		} catch (ClassNotFoundException e) {
+	//			// TODO Auto-generated catch block
+	//			e.printStackTrace();
+	//		}
 
-//	}
-//		fail("Not yet implemented");
-//	}
+	//	}
+	//		fail("Not yet implemented");
+	//	}
 
 	@Test
 	void testInitString() {
-//		Point3D p1 = new Point3D(0,0);
-//		Point3D p2 = new Point3D(1,1);
-//
-//		node_data v1 = new Node(1, p1);		
-//		node_data v2 = new Node(2, p2);	
-//
-//		graph g = new DGraph();
-//
-//		g.addNode(v1);
-//		g.addNode(v2);
-//
-//		g.connect(v1.getKey(), v2.getKey(), 5);
+		//		Point3D p1 = new Point3D(0,0);
+		//		Point3D p2 = new Point3D(1,1);
+		//
+		//		node_data v1 = new Node(1, p1);		
+		//		node_data v2 = new Node(2, p2);	
+		//
+		//		graph g = new DGraph();
+		//
+		//		g.addNode(v1);
+		//		g.addNode(v2);
+		//
+		//		g.connect(v1.getKey(), v2.getKey(), 5);
 
 		graph_algorithms test = new Graph_Algo();
 
-			try {
-				test.init("avi_graph");
-			} catch (Exception e) {
-				fail("Not yet implemented");
-			}
-			System.out.println("");
-		
+		try {
+			test.init("avi_graph");
+		} catch (Exception e) {
+			fail("Not yet implemented");
+		}
+		System.out.println("");
+
 	}
 
 	@Test
 	void testSave() {
-		
+
 		Point3D p1 = new Point3D(0,0);
 		Point3D p2 = new Point3D(1,1);
 
@@ -123,9 +125,9 @@ class graph_algorithmsTest {
 		g.connect(v1.getKey(), v2.getKey(), 5);
 
 		graph_algorithms test = new Graph_Algo();
-		
+
 		test.init(g);
-		
+
 		try {
 			test.save("avi_graph");
 		} catch (Exception e) {
@@ -135,7 +137,7 @@ class graph_algorithmsTest {
 
 	@Test
 	void testIsConnected() {
-		
+
 		Point3D p1 = new Point3D(0,0);
 		Point3D p2 = new Point3D(1,1);
 		Point3D p3 = new Point3D(2,2);
@@ -148,9 +150,9 @@ class graph_algorithmsTest {
 		Point3D p10 = new Point3D(9,9);
 		Point3D p11 = new Point3D(10,10);
 		Point3D p12 = new Point3D(11,11);
-		
+
 		graph s = new DGraph();
-		
+
 		s.addNode(new Node(1,p1));
 		s.addNode(new Node(2,p2));
 		s.addNode(new Node(3,p3));
@@ -210,19 +212,157 @@ class graph_algorithmsTest {
 
 	}
 
-//	@Test
-//	void testShortestPathDist() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testShortestPath() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testTSP() {
-//		fail("Not yet implemented");
-//	}
+	@Test
+	void testShortestPathDist() {
+		Point3D p1 = new Point3D(0,0);
+		Point3D p2 = new Point3D(1,1);
+		Point3D p3 = new Point3D(2,2);
+		Point3D p4 = new Point3D(3,3);
+		Point3D p5 = new Point3D(4,4);
+		Point3D p6 = new Point3D(5,5);
+		Point3D p7 = new Point3D(6,6);
+		Point3D p8 = new Point3D(7,5);
+		Point3D p9 = new Point3D(6,3);
+		Point3D p10 = new Point3D(7,7);
+
+		node_data v1 = new Node(1, p1);		
+		node_data v2 = new Node(2, p2);	
+		node_data v3 = new Node(3, p3);
+		node_data v4 = new Node(4, p4);		
+		node_data v5 = new Node(5, p5);	
+		node_data v6 = new Node(6, p6);
+		node_data v7 = new Node(7, p7);
+		node_data v8 = new Node(8, p8);	
+		node_data v9 = new Node(9, p9);	
+		node_data v10 = new Node(10, p10);
+
+		graph g = new DGraph();
+
+
+		g.addNode(v1);
+		g.addNode(v2);
+		g.addNode(v3);
+		g.addNode(v4);
+		g.addNode(v5);
+		g.addNode(v6);
+		g.addNode(v7);
+		g.addNode(v8);
+		g.addNode(v9);
+		g.addNode(v10);
+
+		g.connect(v1.getKey(), v2.getKey(), 2);
+		g.connect(v1.getKey(), v3.getKey(), 3);
+		g.connect(v2.getKey(), v4.getKey(), 11);
+		g.connect(v3.getKey(), v4.getKey(), 7);
+		g.connect(v1.getKey(), v5.getKey(), 2);
+		g.connect(v4.getKey(), v5.getKey(), 1);
+		g.connect(v2.getKey(), v6.getKey(), 9);
+		g.connect(v1.getKey(), v6.getKey(), 11);
+//		g.connect(v6.getKey(), v9.getKey(), 5);
+
+		graph_algorithms test = new Graph_Algo();
+		test.init(g);
+		assertEquals(2.0,test.shortestPathDist(1,2));
+		System.out.println(test.shortestPathDist(1,4));
+		assertEquals(10.0,test.shortestPathDist(1,4));
+		assertEquals(2.0,test.shortestPathDist(1,5));
+		assertEquals(11.0,test.shortestPathDist(1,6));
+	//	System.out.println(test.shortestPathDist(8,7));
+		//assertEquals(2.0,test.shortestPathDist(1,1));
+//		System.out.println(test.shortestPathDist(1,2));
+//		graph_algorithms test = new Graph_Algo();
+//		test.init(g);
+//		assertEquals(2.0,test.shortestPathDist(1,2));
+//		System.out.println(test.shortestPathDist(1,4));
+//		assertEquals(10.0,test.shortestPathDist(1,4));
+	}
+
+		@Test
+		void testShortestPath() {
+			Point3D p1 = new Point3D(0,0);
+			Point3D p2 = new Point3D(1,1);
+			Point3D p3 = new Point3D(2,2);
+			Point3D p4 = new Point3D(3,3);
+			Point3D p5 = new Point3D(4,4);
+			Point3D p6 = new Point3D(5,5);
+			Point3D p7 = new Point3D(6,6);
+			Point3D p8 = new Point3D(7,5);
+			Point3D p9 = new Point3D(6,3);
+			Point3D p10 = new Point3D(7,7);
+
+			node_data v1 = new Node(1, p1);		
+			node_data v2 = new Node(2, p2);	
+			node_data v3 = new Node(3, p3);
+			node_data v4 = new Node(4, p4);		
+			node_data v5 = new Node(5, p5);	
+			node_data v6 = new Node(6, p6);
+			node_data v7 = new Node(7, p7);
+			node_data v8 = new Node(8, p8);	
+			node_data v9 = new Node(9, p9);	
+			node_data v10 = new Node(10, p10);
+
+			graph g = new DGraph();
+
+
+			g.addNode(v1);
+			g.addNode(v2);
+			g.addNode(v3);
+			g.addNode(v4);
+			g.addNode(v5);
+			g.addNode(v6);
+			g.addNode(v7);
+			g.addNode(v8);
+			g.addNode(v9);
+			g.addNode(v10);
+
+			g.connect(v1.getKey(), v2.getKey(), 2);
+			g.connect(v1.getKey(), v3.getKey(), 3);
+			g.connect(v2.getKey(), v4.getKey(), 11);
+			g.connect(v3.getKey(), v4.getKey(), 7);
+			g.connect(v1.getKey(), v5.getKey(), 2);
+			g.connect(v4.getKey(), v5.getKey(), 1);
+			g.connect(v2.getKey(), v6.getKey(), 9);
+			g.connect(v1.getKey(), v6.getKey(), 11);
+//			g.connect(v6.getKey(), v9.getKey(), 5);
+
+			graph_algorithms test = new Graph_Algo();
+			test.init(g);
+			List<node_data> arr = (test.shortestPath(1, 4));
+			String s = "";
+			for (int i = arr.size()-1 ; i >= 0; i--) { 
+				if (i==0) {
+					s=s+arr.get(i).getKey()+"";
+					//System.out.print(arr.get(i).getKey());	
+				}
+				else {
+					s=s+arr.get(i).getKey()+"->";
+			//	System.out.print(arr.get(i).getKey()+"->");
+				}
+			}
+			//System.out.println("\n"+s);
+			assertEquals("1->3->4",s);
+			
+			List<node_data> arr2 = (test.shortestPath(1, 6));
+			String s2 = "";
+			for (int i = arr2.size()-1 ; i >= 0; i--) { 
+				if (i==0) {
+					s2=s2+arr2.get(i).getKey()+"";
+					System.out.print(arr.get(i).getKey());	
+				}
+				else {
+					s2=s2+arr2.get(i).getKey()+"->";
+				System.out.print(arr.get(i).getKey()+"->");
+				}
+			}
+			System.out.println("\n"+s2);
+			assertEquals("1->2->6",s2);
+		//	assertEquals(11.0,test.shortestPathDist(1,6));
+		//	System.out.println(test.shortestPathDist(8,7));		
+			}
+	
+	//	@Test
+	//	void testTSP() {
+	//		fail("Not yet implemented");
+	//	}
 
 }

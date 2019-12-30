@@ -1,45 +1,65 @@
+
 package utils;
 
+import dataStructure.*;
+import algorithms.*;
+import Tests.*;
+import utils.*;
+import java.util.*;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FileDialog;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.List;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.awt.image.DirectColorModel;
-import java.awt.image.WritableRaster;
+import java.awt.image.ImageObserver;
 import java.io.File;
-import java.io.IOException;
+import java.io.Serializable;
+import java.text.AttributedCharacterIterator;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
-
-import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
-import algorithms.Graph_Algo;
-import algorithms.graph_algorithms;
-import dataStructure.edge_data;
-import dataStructure.graph;
-import dataStructure.node_data;
+import utils.StdDraw;
 
-public class Window extends JFrame implements ActionListener, MouseListener
+public class Window extends JFrame implements ActionListener, MouseListener,Serializable
 {
-	graph grap;
-	graph_algorithms temp;
+	private static JFrame frame;
+	graph grap;	
 	LinkedList<Point3D> points = new LinkedList<Point3D>();
-
+	ArrayList<node_data> SP= new ArrayList<node_data>();
 	public Window()
 	{
 		initGUI();
 	}
-
-	private void initGUI() 
+	public Window(graph g )
 	{
-		this.setSize(500, 500);
+		this.grap = g;
+		initGUI();
+	}
+	private void initGUI()
+	{
+		this.setSize(1000, 1000);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		MenuBar menuBar = new MenuBar();
@@ -47,167 +67,283 @@ public class Window extends JFrame implements ActionListener, MouseListener
 		menuBar.add(menu);
 		this.setMenuBar(menuBar);
 
-		MenuItem item1 = new MenuItem("Item 1");
+		Menu Functions = new Menu("Functions");
+		menuBar.add(Functions);
+		this.setMenuBar(menuBar);
+
+		Menu help = new Menu("Help");
+		menuBar.add(help);
+		this.setMenuBar(menuBar);
+
+		Menu tests = new Menu("tests");
+		menuBar.add(tests);
+		this.setMenuBar(menuBar);
+
+
+
+		MenuItem item1 = new MenuItem("Init graph");
 		item1.addActionListener(this);
 
-		MenuItem item2 = new MenuItem("Item 2");
+		MenuItem item2 = new MenuItem("Is connected");
 		item2.addActionListener(this);
+
+		MenuItem item7 = new MenuItem("Shortest path dist");    
+		item7.addActionListener(this);
+
+		MenuItem item8 = new MenuItem("Shortest path");    
+		item8.addActionListener(this);
+
+		MenuItem item9 = new MenuItem("TSP");    
+		item9.addActionListener(this);
 
 		MenuItem item3 = new MenuItem("save");
-		item2.addActionListener(this);
+		item3.addActionListener(this);
 
 		MenuItem item4 = new MenuItem("load");
-		item2.addActionListener(this);
+		item4.addActionListener(this);
+
+		MenuItem item5 = new MenuItem("test1");
+		item5.addActionListener(this);
+
+		MenuItem item6 = new MenuItem("test2");
+		item5.addActionListener(this);
+
 
 		menu.add(item1);
-		menu.add(item2);
 		menu.add(item3);
 		menu.add(item4);
+
+		tests.add(item5);
+		tests.add(item6);
+
+		Functions.add(item2);
+		Functions.add(item7);
+		Functions.add(item8);
+		Functions.add(item9);
+
 
 		this.addMouseListener(this);
 	}
 
-	//	public void print(Graph_Algo g) {
-	//		
-	//		Collection<node_data> temp = this.grap.getV();
-	//		for (node_data nd : temp) {
-	//			
-	//		}
-	//
-	//	}
-	public Window(graph g) {
-		this.grap = g;
-		temp = new Graph_Algo();
-		this.temp.init(g);
-		initGUI();
-	}
 	public void paint(Graphics g)
 	{
-//		Collection<node_data> temp = this.grap.getV();
-//		super.paint(g);
-//		Point3D prev = null;
-//		for (node_data p : temp) 
-//		{
-//			g.fillOval((int)p.getLocation().ix(), (int)p.getLocation().iy(), 10, 10);
-//			g. setColor(Color.BLUE);
-			//			int src = p.getKey();
-			//			Collection<edge_data> coledg = this.grap.getE(src);
-			//			for (edge_data ed : coledg)
-			//			{
-			//				
-			//			}
-			//			
-			//
-			//			if(prev != null)
-			//			{
-			//				g.setColor(Color.RED);
-			//				g.drawLine((int)p.x(), (int)p.y(), 
-			//						(int)prev.x(), (int)prev.y());
-			//
-			//				g.drawString("5", (int)((p.x()+prev.x())/2),(int)((p.y()+prev.y())/2));
-			//			}
+		super.paint(g);		
+		for(node_data node : this.grap.getV()) {
+			g.setColor(Color.RED);
+			g.fillOval(node.getLocation().ix(), node.getLocation().iy(), 12, 12);
+			Collection<edge_data> edd = this.grap.getE(node.getKey());
+			g.setColor(Color.BLACK);
+			g.drawString(""+node.getKey(), node.getLocation().ix()+4,node.getLocation().iy()-3);
 
-			//	prev = p;
-		//}
+			for (edge_data ed : edd)
+			{			
+				if(ed.getTag()==2)
+				{
+
+					g.setColor(Color.green);
+					ed.setTag(0);
+				}
+				else
+				{
+					g.setColor(Color.blue);
+				}				
+				g.drawLine(node.getLocation().ix()+5, node.getLocation().iy()+5, this.grap.getNode(ed.getDest()).getLocation().ix()+5, this.grap.getNode(ed.getDest()).getLocation().iy()+5);
+				int x1 = node.getLocation().ix()+5;
+				int y1 = node.getLocation().iy()+5;
+				int x2 = this.grap.getNode(ed.getDest()).getLocation().ix()+5;
+				int y2 = this.grap.getNode(ed.getDest()).getLocation().iy()+5;
+				int yyyyy = (((node.getLocation().iy()+this.grap.getNode(ed.getDest()).getLocation().iy())/2)+this.grap.getNode(ed.getDest()).getLocation().iy())/2;
+				int xxxxx = (((node.getLocation().ix()+this.grap.getNode(ed.getDest()).getLocation().ix())/2)+this.grap.getNode(ed.getDest()).getLocation().ix())/2;
+				g.setColor(Color.yellow);
+				g.fillOval((xxxxx+this.grap.getNode(ed.getDest()).getLocation().ix())/2, (yyyyy+this.grap.getNode(ed.getDest()).getLocation().iy())/2, 10, 10);
+				g.setColor(Color.BLACK);
+				g.drawString(""+ed.getWeight(), (int)((x1+x2)/2),(int)((y1+y2)/2));
+			}
+		}		
 	}
 
-
-
 	@Override
-	public void actionPerformed(ActionEvent e) 
+	public void actionPerformed(ActionEvent e)
 	{
 		String str = e.getActionCommand();
-
-		if(str.equals("Item 1"))
+		if(str.equals("TSP"))
 		{
+			Graph_Algo temp = new Graph_Algo();
+			temp.init(grap);
+			JFrame jinput = new JFrame();
+			String start = JOptionPane.showInputDialog(jinput,"Start point");
+			String finish = JOptionPane.showInputDialog(jinput,"Finish point");
+			try
+			{
+				int src = Integer.parseInt(start);
+				int des = Integer.parseInt(finish);
+				double x = temp.shortestPathDist(src, des);
+				JOptionPane.showMessageDialog(jinput, "The shortest distance is: " + x);
+			}
+			catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			repaint();
+		}
+
+
+		//"Shortest path dist"
+		if(str.equals("Shortest path dist"))
+		{
+			Graph_Algo temp = new Graph_Algo();
+			temp.init(grap);
+			JFrame jinput = new JFrame();
+			String start = JOptionPane.showInputDialog(jinput,"Start point");
+			String finish = JOptionPane.showInputDialog(jinput,"Finish point");
+			try
+			{
+				int src = Integer.parseInt(start);
+				int des = Integer.parseInt(finish);
+				double x = temp.shortestPathDist(src, des);
+				JOptionPane.showMessageDialog(jinput, "The shortest distance is: " + x);
+			}
+			catch (Exception e2) {
+				e2.printStackTrace();
+			}
+
+			repaint();
+		}
+		
+		//"Shortest path"
+		if(str.equals("Shortest path"))
+		{
+			java.util.List<node_data> nodes = new ArrayList<node_data>();
+			
+			Graph_Algo temp = new Graph_Algo();
+			temp.init(grap);
+
+			JFrame jinput = new JFrame();
+			String start = JOptionPane.showInputDialog(jinput,"Start point");
+			String finish = JOptionPane.showInputDialog(jinput,"Finish point");
+			try
+			{
+				int src = Integer.parseInt(start);
+				int des = Integer.parseInt(finish);
+				nodes = temp.shortestPath(src, des);
+			}
+			catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			for (int i = nodes.size()-1; i >= 0; i--) {
+				SP.add(nodes.get(i));
+			}
+
+			for (int i = 0; i < SP.size()-1; i++) {
+				this.grap.getEdge(SP.get(i).getKey(), SP.get(i+1).getKey()).setTag(2);
+			}
+			repaint();
+		}
+
+		//"Is connected"
+		if(str.equals("Is connected"))
+		{
+			Graph_Algo temp = new Graph_Algo();
+			temp.init(grap);
+			boolean ans = temp.isConnected();
+			JFrame jinput = new JFrame();
+			try
+			{
+				Graph_Algo ga = new Graph_Algo();
+				ga.init(grap);
+				JOptionPane.showMessageDialog(jinput, "Is connected? "+ans );
+			}
+			catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			repaint();
+		}
+		
+		//save
+		if(str.equals("save"))
+		{
+			Graph_Algo temp = new Graph_Algo();
+			temp.init(grap);
+
+			FileDialog chooser = new FileDialog(Window.frame, "Use a .png or .jpg extension", FileDialog.SAVE);
+			chooser.setVisible(true);
+			String filename = chooser.getFile();
+			if (filename != null) 
+			{
+				temp.save(chooser.getDirectory()+filename+".txt");
+			}
+		}
+		
+		//load
+		if(str.equals("load"))
+		{
+			Graph_Algo temp = new Graph_Algo();
+			JFrame.setDefaultLookAndFeelDecorated(true);
+			JDialog.setDefaultLookAndFeelDecorated(true);
+			JFrame frame = new JFrame("JComboBox Test");
+			frame.setLayout(new FlowLayout());
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			JFileChooser fileChooser = new JFileChooser();
+			int returnValue = fileChooser.showOpenDialog(null);
+			if (returnValue == JFileChooser.APPROVE_OPTION) 
+			{
+				File selectedFile = fileChooser.getSelectedFile();
+
+				temp.init(selectedFile.getPath());
+				grap = temp.copy();
+
+				repaint();
+			}
+			frame.pack();;
+		}
+		if(str.equals("test1"))
+		{		
 			Point3D p1 = new Point3D(100,100);
 			Point3D p2 = new Point3D(50,300);
 			Point3D p3 = new Point3D(400,150);
+			Point3D p4 = new Point3D(600,200);
 
 			points.add(p1);
 			points.add(p2);
 			points.add(p3);
+			points.add(p4);
 
 			repaint();
 		}
-		if (str.equals("save")) 
-		{
-
-		}
-
 	}
-	//	private static BufferedImage offscreenImage, onscreenImage;
-	//	public static void save(String filename) {
-	//		if (filename == null) throw new IllegalArgumentException();
-	//		File file = new File(filename);
-	//		String suffix = filename.substring(filename.lastIndexOf('.') + 1);
-	//
-	//		// png files
-	//		if ("png".equalsIgnoreCase(suffix)) {
-	//			try {
-	//				ImageIO.write(onscreenImage, suffix, file);
-	//			}
-	//			catch (IOException e) {
-	//				e.printStackTrace();
-	//			}
-	//		}
-	//
-	//		// need to change from ARGB to RGB for JPEG
-	//		// reference: http://archives.java.sun.com/cgi-bin/wa?A2=ind0404&L=java2d-interest&D=0&P=2727
-	//		else if ("jpg".equalsIgnoreCase(suffix)) {
-	//			WritableRaster raster = onscreenImage.getRaster();
-	//			WritableRaster newRaster;
-	//			newRaster = raster.createWritableChild(0, 0, 5,5, 0, 0, new int[] {0, 1, 2});
-	//			DirectColorModel cm = (DirectColorModel) onscreenImage.getColorModel();
-	//			DirectColorModel newCM = new DirectColorModel(cm.getPixelSize(),
-	//					cm.getRedMask(),
-	//					cm.getGreenMask(),
-	//					cm.getBlueMask());
-	//			BufferedImage rgbBuffer = new BufferedImage(newCM, newRaster, false,  null);
-	//			try {
-	//				ImageIO.write(rgbBuffer, suffix, file);
-	//			}
-	//			catch (IOException e) {
-	//				e.printStackTrace();
-	//			}
-	//		}
-	//
-	//		else {
-	//			System.out.println("Invalid image file type: " + suffix);
-	//		}
-	//	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("mouseClicked");
-
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+
 		int x = e.getX();
 		int y = e.getY();
 		Point3D p = new Point3D(x,y);
 		points.add(p);
-		repaint();
-		System.out.println("mousePressed");
+		//repaint();
+		//System.out.println("mousePressed");
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		System.out.println("mouseReleased");
+		//System.out.println("mouseReleased");
 
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		System.out.println("mouseEntered");
+		//System.out.println("mouseEntered");
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		System.out.println("mouseExited");
+		//System.out.println("mouseExited");
 	}
+
+
+
 }

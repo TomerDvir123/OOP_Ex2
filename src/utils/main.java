@@ -119,13 +119,15 @@ public class main
 //		g.connect(v19.getKey(), v20.getKey(), 9);
 
 
-		graph_algorithms test = new Graph_Algo();
-		
-		test.init(g);
-		System.out.println(test.isConnected());
+//		graph_algorithms test = new Graph_Algo();
+//		
+//		test.init(g);
+//		System.out.println(test.isConnected());
 
-//		Window wind = new Window();
-//		wind.setVisible(true);
+		Window wind = new Window();
+		wind.setVisible(true);
+		
+		
 	}
 
 }

@@ -148,7 +148,14 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 	public double shortestPathDist(int src, int dest) {
 		// TODO Auto-generated method stub
 
-		cleanGraf();
+		//cleanGraf();
+		Collection<node_data> colnod = this.grap.getV();
+		for (node_data nd : colnod)
+		{
+			nd.setWeight(Double.MAX_VALUE);
+			nd.setInfo("");
+			nd.setTag(0);
+		}
 		this.grap.getNode(src).setWeight(0);
 		this.grap.getNode(src).setInfo(src+"");
 		PriorityQueue<Double> pQueue = new PriorityQueue<Double>();
@@ -214,45 +221,38 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 			now = Integer.parseInt(t);			
 		}
 		rememberWay.add(this.grap.getNode(src));
+		for (int i = 0; i < rememberWay.size(); i++)     //to check
+		{
+			rememberWay.get(i).setTag(2);
+		}
 		return rememberWay;
 	}
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
-		if((connection (this.grap))==false)
-		{
-			return null;
-		}
+
+
 		List<node_data> nodesTSP = new ArrayList<node_data>();
 		List<node_data> nodesTSP_temp = new ArrayList<node_data>();
-		int y = 0;
 		int i = 0;
 		while(i+1<targets.size())
 		{
 			nodesTSP_temp = shortestPath(targets.get(i), targets.get(i+1));
-			for (int k = 0; k < nodesTSP_temp.size(); k++)
+			for (int k = nodesTSP_temp.size()-1 ; k >= 0  ; k--)
 			{
-				nodesTSP.set(y, nodesTSP_temp.get(k));
-				y++;
+				if(nodesTSP.contains(nodesTSP_temp.get(k))) 
+				{
+					;
+				}
+				else 
+				{
+					nodesTSP.add(nodesTSP_temp.get(k));
+				}
 			}
 			i++;
 		}
 		return nodesTSP;
-	}
 
-
-	private boolean connection (graph x) {
-		Collection<node_data> temp = this.grap.getV();
-		int size = temp.size();
-		int sum_edges = 0;
-		for (node_data nd : temp) {
-			sum_edges = this.grap.getE(nd.getKey()).size();
-			if(sum_edges != size-1)
-			{
-				return false;
-			}
-		}
-		return true;
 	}
 
 	@Override

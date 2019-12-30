@@ -16,42 +16,44 @@ public class main2 {
 		// // TODO Auto-generated method stub
 		graph g = new DGraph();
 
+		//		Point3D p1 = new Point3D(0,0);
+		//
+		//		for (int i = 1; i <= 1000000 ; i++) {
+		//			node_data t = new Node( i, new Point3D(p1.x()+i , p1.y()+i ,p1.z()+i ));
+		//			g.addNode(t);
+		//
+		//		}
+		//
+		//		for (int i = 1; i <= 1000000-10 ; i++) {
+		//			g.connect(i, i+1, i*0.5);
+		//			g.connect(i, i+2, i*0.3);
+		//			g.connect(i, i+3, 1);
+		//			g.connect(i, i+4, i*10);
+		//			g.connect(i, i+5, i*3);
+		//			g.connect(i, i+6, i*0.8);
+		//			g.connect(i, i+7, i*0.5);
+		//			g.connect(i, i+8, i*7);
+		//			g.connect(i, i+9, i*3);
+		//			g.connect(i, i+10, i*2.5);
+		//		}
+		//
+		//		graph_algorithms test = new Graph_Algo();
+		//		test.init(g);
+		//		System.out.println(test.shortestPathDist(1,20));
+
+		//		test.shortestPathDist(1, 6);
+		//		List<node_data> arr = (test.shortestPath(1, 20));
+		//		for (int i = arr.size()-1 ; i >= 0; i--) { 
+		//			System.out.print(arr.get(i).getKey()+"->");
+		//		}
+		//		System.out.println("a");
+
+
+
 		Point3D p1 = new Point3D(0,0);
-
-		for (int i = 1; i <= 20 ; i++) {
-			node_data t = new Node( i, new Point3D(p1.x()+i , p1.y()+i ,p1.z()+i ));
-			g.addNode(t);
-
-		}
-
-		for (int i = 1; i <= 20-2 ; i++) {
-			g.connect(i, i+1, i*0.5);
-			g.connect(i, i+2, i*0.3);
-//			g.connect(i, i+3, 0);
-//			g.connect(i, i+4, i*10);
-//			g.connect(i, i+5, i*3);
-//			g.connect(i, i+6, i*0.8);
-//			g.connect(i, i+7, i*0.5);
-//			g.connect(i, i+8, i*7);
-//			g.connect(i, i+9, i*3);
-//			g.connect(i, i+10, i*2.5);
-		}
-
-		graph_algorithms test = new Graph_Algo();
-		test.init(g);
-//		test.shortestPathDist(1, 6);
-		List<node_data> arr = (test.shortestPath(1, 6));
-		for (int i = arr.size()-1 ; i >= 0; i--) { 
-			System.out.print(arr.get(i).getKey()+"->");
-		}
-//		System.out.println("a");
-
-
-
-		//				Point3D p1 = new Point3D(0,0);
-		//				Point3D p2 = new Point3D(1,1);
-		//				Point3D p3 = new Point3D(2,2);
-		//				Point3D p4 = new Point3D(3,3);
+		Point3D p2 = new Point3D(1,1);
+		Point3D p3 = new Point3D(2,2);
+		Point3D p4 = new Point3D(3,3);
 		//				Point3D p5 = new Point3D(4,4);
 		//				Point3D p6 = new Point3D(5,5);
 		//				Point3D p7 = new Point3D(6,6);
@@ -68,11 +70,11 @@ public class main2 {
 		//				Point3D p18 = new Point3D(15,5);
 		//				Point3D p19 = new Point3D(16,3);
 		//				Point3D p20 = new Point3D(17,7);
-		//				
-		//				node_data v1 = new Node(1, p1);		
-		//				node_data v2 = new Node(2, p2);	
-		//				node_data v3 = new Node(3, p3);
-		//				node_data v4 = new Node(4, p4);		
+
+		node_data v1 = new Node(1, p1);		
+		node_data v2 = new Node(2, p2);	
+		node_data v3 = new Node(3, p3);
+		node_data v4 = new Node(4, p4);		
 		//				node_data v5 = new Node(5, p5);	
 		//				node_data v6 = new Node(6, p6);
 		//				node_data v7 = new Node(7, p7);
@@ -91,12 +93,12 @@ public class main2 {
 		//				node_data v20 = new Node(20, p10);
 		//				
 		//				graph g = new DGraph();
-		//		
-		//				
-		//				g.addNode(v1);
-		//				g.addNode(v2);
-		//				g.addNode(v3);
-		//				g.addNode(v4);
+
+
+		g.addNode(v1);
+		g.addNode(v2);
+		g.addNode(v3);
+		g.addNode(v4);
 		//				g.addNode(v5);
 		//				g.addNode(v6);
 		//				g.addNode(v7);
@@ -114,10 +116,10 @@ public class main2 {
 		//				g.addNode(v19);
 		//				g.addNode(v20);
 		//				
-		//				g.connect(v1.getKey(), v2.getKey(), 2);
-		//				g.connect(v1.getKey(), v3.getKey(), 3);
-		//				g.connect(v2.getKey(), v4.getKey(), 11);
-		//				g.connect(v2.getKey(), v6.getKey(), 7);
+		g.connect(v1.getKey(), v2.getKey(), 2);
+		g.connect(v1.getKey(), v3.getKey(), 3);
+		g.connect(v2.getKey(), v4.getKey(), 11);
+		g.connect(v3.getKey(), v4.getKey(), 7);
 		//				g.connect(v4.getKey(), v8.getKey(), 10);
 		//				g.connect(v4.getKey(), v10.getKey(), 8);
 		//				g.connect(v6.getKey(), v10.getKey(), 9);
@@ -148,10 +150,16 @@ public class main2 {
 		//				g.connect(v19.getKey(), v20.getKey(), 9);
 		//				
 		//				
-		//				graph_algorithms test = new Graph_Algo();
-		//				test.init(g);
-		//				System.out.println(test.shortestPathDist(1,20));
-
+		graph_algorithms test = new Graph_Algo();
+		test.init(g);
+		List<node_data> arr = (test.shortestPath(1, 4));
+		for (int i = arr.size()-1 ; i >= 0; i--) { 
+			if (i==0) {
+				System.out.print(arr.get(i).getKey());	
+			}
+			else
+			System.out.print(arr.get(i).getKey()+"->");
+		}	
 	}
 
 }
